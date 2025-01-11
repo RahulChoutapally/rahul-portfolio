@@ -3,94 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul Choutapally Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>3D Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
         }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        section {
-            margin: 2rem;
-        }
-        .section-title {
-            margin-bottom: 1rem;
-            font-weight: bold;
-            color: #007bff;
-        }
-        footer {
-            background-color: #f8f9fa;
-            text-align: center;
-            padding: 1rem 0;
-            margin-top: 2rem;
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Rahul Choutapally</h1>
-        <p>AI/ML Engineer | Researcher | Innovator</p>
-        <a href="mailto:rchoutapally@gmail.com" class="btn btn-light">Email Me</a>
-        <a href="https://linkedin.com/in/rahul-choutapally/" target="_blank" class="btn btn-light">LinkedIn</a>
-        <a href="https://github.com/RahulChoutapally" target="_blank" class="btn btn-light">GitHub</a>
-    </header>
+    <script>
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-    <section>
-        <h2 class="section-title">Professional Summary</h2>
-        <p>AI/ML engineer with expertise in machine learning, NLP, and computer vision, delivering real-world solutions like phishing detection and thermal imaging-based animal detection. Seeking roles as a Research Engineer or AI/ML Engineer to drive innovation and create impactful solutions.</p>
-    </section>
+        // Create a cube
+        const geometry = new THREE.BoxGeometry();
+        const materials = [
+            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Rahul Choutapally\nAI/ML Engineer') }),
+            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Education\nMSc in Computer Science\nUniversity of the Pacific') }),
+            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Experience\nTCS: Systems Engineer\n2020-2022') }),
+            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Projects\nAniLarm\nGamersBot') }),
+            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Publications\nPaciPhish\nWeb Frameworks') }),
+            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Contact\nEmail: rchoutapally@gmail.com') })
+        ];
+        const cube = new THREE.Mesh(geometry, materials);
+        scene.add(cube);
 
-    <section>
-        <h2 class="section-title">Education</h2>
-        <ul>
-            <li>Master of Science in Computer Science, University of the Pacific, Stockton, CA (2024) | GPA: 4.00/4.00</li>
-            <li>Bachelor of Technology in Computer Science & Engineering, Keshav Memorial Institute of Technology, Hyderabad, India (2020) | GPA: 8.02/10</li>
-        </ul>
-    </section>
+        // Lighting
+        const light = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(light);
 
-    <section>
-        <h2 class="section-title">Professional Experience</h2>
-        <ul>
-            <li>
-                <strong>Systems Engineer, Tata Consultancy Services</strong> (Nov 2020 – Aug 2022)
-                <ul>
-                    <li>Enhanced APTIV's enterprise applications, optimizing system efficiency and performance.</li>
-                    <li>Acted as SME for 21 applications, providing technical guidance and resolving issues.</li>
-                    <li>Led migration of legacy applications to .NET and C#, increasing efficiency by 25%.</li>
-                </ul>
-            </li>
-        </ul>
-    </section>
+        // Camera position
+        camera.position.z = 2;
 
-    <section>
-        <h2 class="section-title">Projects</h2>
-        <ul>
-            <li>
-                <strong>AniLarm: Offline AI for Small Animal Detection</strong>
-                <ul>
-                    <li>Achieved 97.83% accuracy using thermal imaging and an EfficientNet model deployed on Raspberry Pi.</li>
-                    <li>Built a real-time auditory alert system with Bluetooth speakers, reducing detection latency by 20%.</li>
-                </ul>
-            </li>
-            <li>
-                <strong>GamersBot</strong>
-                <ul>
-                    <li>Used BERT for NLP, achieving 65% accuracy in classifying game-related information.</li>
-                    <li>Built an interactive platform with Panel, improving user query resolution efficiency by 25%.</li>
-                </ul>
-            </li>
-        </ul>
-    </section>
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
 
-    <footer>
-        <p>&copy; 2025 Rahul Choutapally. All Rights Reserved.</p>
-    </footer>
+        // Helper function to create textures with text
+        function createTextTexture(text) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const context = canvas.getContext('2d');
+            context.fillStyle = '#007bff';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = '30px Arial';
+            context.fillStyle = 'white';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.fillText(text, canvas.width / 2, canvas.height / 2);
+            return new THREE.CanvasTexture(canvas);
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
