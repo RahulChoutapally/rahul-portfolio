@@ -1,139 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul Choutapally Portfolio</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
-        .container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            padding: 2rem;
-        }
-        .profile {
-            flex: 1;
-            background-color: #e6e6fa;
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .profile img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-        }
-        .content {
-            flex: 2;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: space-evenly;
-        }
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 1rem;
-            width: 30%;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .card h3 {
-            margin: 0.5rem 0;
-            color: #007bff;
-        }
-        footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem;
-            background-color: #007bff;
-            color: white;
-        }
-        #threejs-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rahul Choutapally Portfolio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="threejs-container"></div>
-    <div class="container">
+  <div class="container">
+    <nav class="sidebar">
+      <ul>
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="intro">
         <div class="profile">
-            <img src="https://via.placeholder.com/150" alt="Profile Picture">
-            <h2>Rahul Choutapally</h2>
-            <p>AI/ML Engineer | Researcher | Innovator</p>
-            <p>Email: rchoutapally@gmail.com</p>
+          <img src="your-photo.jpg" alt="Rahul Choutapally">
+          <h1>I'm Rahul Choutapally</h1>
+          <p>AI/ML Engineer with expertise in machine learning, NLP, and computer vision.</p>
         </div>
-        <div class="content">
-            <div class="card">
-                <h3>Projects</h3>
-                <p>AniLarm: Offline AI for animal detection.</p>
-                <p>GamersBot: NLP-based game information retrieval.</p>
-            </div>
-            <div class="card">
-                <h3>Awards</h3>
-                <p>Best Paper Award: IEEE CARS</p>
-                <p>Global Design Recognition</p>
-            </div>
-            <div class="card">
-                <h3>Publications</h3>
-                <p>PaciPhish: Phishing URL Detection</p>
-                <p>Web-based ML Framework</p>
-            </div>
+      </section>
+
+      <section class="highlights">
+        <div class="highlight-box">
+          <h2>251</h2>
+          <p>Projects</p>
         </div>
-    </div>
-    <footer>
-        &copy; 2025 Rahul Choutapally. All Rights Reserved.
-    </footer>
+        <div class="highlight-box">
+          <h2>156</h2>
+          <p>Awards</p>
+        </div>
+        <div class="highlight-box">
+          <h2>172</h2>
+          <p>Publications</p>
+        </div>
+      </section>
 
-    <script>
-        // 3D background setup
-        const container = document.getElementById('threejs-container');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        container.appendChild(renderer.domElement);
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="card">
+          <h3>AniLarm</h3>
+          <p>AI-based small animal detection system using thermal imaging.</p>
+        </div>
+        <div class="card">
+          <h3>PaciPhish</h3>
+          <p>Phishing URL detection framework with 96.87% accuracy.</p>
+        </div>
+        <!-- Add more project cards as needed -->
+      </section>
 
-        // Create rotating spheres
-        const geometry = new THREE.SphereGeometry(0.5, 32, 32);
-        const material = new THREE.MeshStandardMaterial({ color: 0x007bff });
-        const sphere = new THREE.Mesh(geometry, material);
-
-        sphere.position.set(-2, 0, -5);
-        scene.add(sphere);
-
-        const light = new THREE.PointLight(0xffffff, 1, 100);
-        light.position.set(10, 10, 10);
-        scene.add(light);
-
-        camera.position.z = 5;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            sphere.rotation.y += 0.01;
-            sphere.rotation.x += 0.01;
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
-    </script>
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:rchoutapally@gmail.com">rchoutapally@gmail.com</a></p>
+        <p>LinkedIn: <a href="https://linkedin.com/in/rahul-choutapally">Rahul Choutapally</a></p>
+        <p>GitHub: <a href="https://github.com/RahulChoutapally">RahulChoutapally</a></p>
+      </section>
+    </main>
+  </div>
 </body>
 </html>
