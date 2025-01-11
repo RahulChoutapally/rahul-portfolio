@@ -3,78 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Portfolio</title>
+    <title>Rahul Choutapally Portfolio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             margin: 0;
-            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
-        canvas {
-            display: block;
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 2rem;
+        }
+        .profile {
+            flex: 1;
+            background-color: #e6e6fa;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .profile img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        .content {
+            flex: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-evenly;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            width: 30%;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .card h3 {
+            margin: 0.5rem 0;
+            color: #007bff;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #007bff;
+            color: white;
+        }
+        #threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
+    <div id="threejs-container"></div>
+    <div class="container">
+        <div class="profile">
+            <img src="https://via.placeholder.com/150" alt="Profile Picture">
+            <h2>Rahul Choutapally</h2>
+            <p>AI/ML Engineer | Researcher | Innovator</p>
+            <p>Email: rchoutapally@gmail.com</p>
+        </div>
+        <div class="content">
+            <div class="card">
+                <h3>Projects</h3>
+                <p>AniLarm: Offline AI for animal detection.</p>
+                <p>GamersBot: NLP-based game information retrieval.</p>
+            </div>
+            <div class="card">
+                <h3>Awards</h3>
+                <p>Best Paper Award: IEEE CARS</p>
+                <p>Global Design Recognition</p>
+            </div>
+            <div class="card">
+                <h3>Publications</h3>
+                <p>PaciPhish: Phishing URL Detection</p>
+                <p>Web-based ML Framework</p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Rahul Choutapally. All Rights Reserved.
+    </footer>
+
     <script>
-        // Scene setup
+        // 3D background setup
+        const container = document.getElementById('threejs-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        container.appendChild(renderer.domElement);
 
-        // Create a cube
-        const geometry = new THREE.BoxGeometry();
-        const materials = [
-            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Rahul Choutapally\nAI/ML Engineer') }),
-            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Education\nMSc in Computer Science\nUniversity of the Pacific') }),
-            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Experience\nTCS: Systems Engineer\n2020-2022') }),
-            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Projects\nAniLarm\nGamersBot') }),
-            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Publications\nPaciPhish\nWeb Frameworks') }),
-            new THREE.MeshBasicMaterial({ color: 0x007bff, map: createTextTexture('Contact\nEmail: rchoutapally@gmail.com') })
-        ];
-        const cube = new THREE.Mesh(geometry, materials);
-        scene.add(cube);
+        // Create rotating spheres
+        const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+        const material = new THREE.MeshStandardMaterial({ color: 0x007bff });
+        const sphere = new THREE.Mesh(geometry, material);
 
-        // Lighting
-        const light = new THREE.AmbientLight(0xffffff, 1);
+        sphere.position.set(-2, 0, -5);
+        scene.add(sphere);
+
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 10, 10);
         scene.add(light);
 
-        // Camera position
-        camera.position.z = 2;
+        camera.position.z = 5;
 
-        // Animation
         function animate() {
             requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
+            sphere.rotation.y += 0.01;
+            sphere.rotation.x += 0.01;
             renderer.render(scene, camera);
-        }
-
-        // Helper function to create textures with text
-        function createTextTexture(text) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 512;
-            const context = canvas.getContext('2d');
-            context.fillStyle = '#007bff';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.font = '30px Arial';
-            context.fillStyle = 'white';
-            context.textAlign = 'center';
-            context.textBaseline = 'middle';
-            context.fillText(text, canvas.width / 2, canvas.height / 2);
-            return new THREE.CanvasTexture(canvas);
         }
 
         animate();
 
-        // Handle window resize
         window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
 </body>
